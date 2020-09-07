@@ -1,7 +1,7 @@
 # Mass-Anime-Downloader
 Windows Electron App, Download thousands of dubbed &amp; subbed anime videos.
 
-Download compiled version at: https://bda.life/Mass_Anime_Downloader.zip
+Download compiled version at: https://massanimedownloader.imfast.io/Mass_Anime_Downloader.zip
 
 The proxy is not used to download files, only very small json proxy requests are made to grab and decode the mp4upload links.
 
