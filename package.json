@@ -1,0 +1,31 @@
+{
+  "name": "Mass_Anime_Downloader",
+  "productName": "Mass_Anime_Downloader",
+  "description": "",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "zebraslive",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "dependencies": {
+    "electron-dl": "*",
+    "ssl-root-cas": "*",
+    "request": "*",
+    "cheerio": "*"
+  },
+  "devDependencies": {
+    "electron": "9.0.2",
+    "@electron-forge/cli": "6.0.0-beta.52",
+    "@electron-forge/maker-deb": "6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.52",
+    "@electron-forge/maker-zip": "6.0.0-beta.52"
+  },
+  "config": {}
+}
