@@ -20,3 +20,4 @@ Search for anime from within the app.
 Get updates delivered via email. more features are going to be added.
 
 ![alt text](https://i.imgur.com/Xe4BeoE.gif)
+![alt text](https://i.imgur.com/XQc4uCH.gif)
