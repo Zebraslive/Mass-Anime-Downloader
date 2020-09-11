@@ -1,7 +1,7 @@
 # Mass-Anime-Downloader
 Windows Electron App, Download thousands of dubbed &amp; subbed anime videos.
 
-Download compiled version at: https://massanimedownloader.imfast.io/Mass_Anime_Downloader.zip
+Download compiled version at: https://massanimedownloader.imfast.io/M.A.D.zip
 
 https://www.virustotal.com/gui/file/e1758b86b2a05b3a5c5f6356dceaead091c3c91e2c04001e96d5458d1f794eed/detection
 
@@ -19,7 +19,15 @@ very small footprint.
 
 Search for anime from within the app.
 
-Get updates delivered via email. more features are going to be added.
+Regularly updated, new features coming soon!
 
 ![alt text](https://i.imgur.com/Xe4BeoE.gif)
 ![alt text](https://i.imgur.com/XQc4uCH.gif)
+
+How to use:
+Extract M.A.D.zip and open the exe in main folder.
+Search for a series and click grab. 
+
+On first run your AV might try to scan, sometimes this wil cause problems with connecting after scan is complete. You can manually restart app to fix connecting issues.
+
+When first downloading a mp4 you will probably need to allow in AV/firewall. after allowing app to download one video you can just try downloading again. You only have to do this once if using antivirus.
