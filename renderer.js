@@ -7,7 +7,10 @@
 const { ipcRenderer } = require('electron');
 var request = require('request');
 const cheerio = require('cheerio');
+const {shell} = require('electron') // deconstructing assignment
 const path = require('path');
+const Store = require('electron-store');
+const store = new Store();
 var fs = require('fs');
 require('ssl-root-cas').inject();
 
@@ -17,10 +20,16 @@ require('ssl-root-cas').inject();
  var windoxwf = BrowserWindow.getFocusedWindow();
  windoxwf.webContents.openDevTools({mode:'undocked'}) //uncomment to open dev tools on app load.
 });
-  if (fs.existsSync('./p_k.txt')) {
-    var dataihg = fs.readFileSync('./p_k.txt');
-  $('#access_key').val(dataihg);
-  }
+ $('.viewfilesx').click(function() {
+  console.log(__dirname+'\\..\\..\\anime_downloads\\');
+  shell.openExternal('file://' + __dirname+'\\..\\..\\anime_downloads\\');
+
+});
+ $('#access_key').val(store.get('api_access_key'));
+  // if (fs.existsSync('./p_k.txt')) {
+  //   var dataihg = fs.readFileSync('./p_k.txt');
+  // $('#access_key').val(dataihg);
+  // }
 
 
 

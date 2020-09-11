@@ -13,7 +13,8 @@ function createWindow () {
     transparent: true, frame: false,
     vibrancy: 'ultra-dark',
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      backgroundThrottling: false
     }
   })
  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {

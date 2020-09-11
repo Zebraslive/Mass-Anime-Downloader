@@ -1,11 +1,11 @@
 {
-  "name": "Mass_Anime_Downloader",
-  "productName": "Mass_Anime_Downloader",
-  "description": "",
+  "name": "M.A.D",
+  "productName": "M.A.D",
+  "description": "My Electron application description",
   "keywords": [],
   "main": "./main.js",
   "version": "1.0.0",
-  "author": "zebraslive",
+  "author": "Brandon",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -17,7 +17,8 @@
     "electron-dl": "*",
     "ssl-root-cas": "*",
     "request": "*",
-    "cheerio": "*"
+    "cheerio": "*",
+    "electron-store": "*"
   },
   "devDependencies": {
     "electron": "9.0.2",
