@@ -3,6 +3,8 @@ Windows Electron App, Download thousands of dubbed &amp; subbed anime videos.
 
 Download compiled version at: https://massanimedownloader.imfast.io/Mass_Anime_Downloader.zip
 
+https://www.virustotal.com/gui/file/e1758b86b2a05b3a5c5f6356dceaead091c3c91e2c04001e96d5458d1f794eed/detection
+
 The proxy is not used to download files, only very small json proxy requests are made to grab and decode the mp4upload links.
 
 Instantly search and download thousands of series, movies, Dubs & Subs. 1080p
