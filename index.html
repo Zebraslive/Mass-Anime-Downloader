@@ -5,68 +5,32 @@
     <title>Mass Anime Downloader - @Zebraslive</title>
 
     <link rel="stylesheet" type="text/css" href="./styles.css">
-
-  </head>
-  <body>
-
-   <div class="">
-     <div id="title-bar-btns" style="-webkit-app-region: drag; display:block;">
-       <span>Mass Anime Downloader</span>
-          <div class="rightbuttons">
-            <button id="min-btn" class="btn btn-default btn-sm"><i class="fa fa-window-minimize"></i></button>
-          <button id="close-btn" class="btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-            </div>
-     </div>
-
-     </div>
-     <div class="access_key_hold">
-
-         <div class="centerinputd"><center>
-<div class="loaderholdfii"><div class="loaderff_x"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
- <div style="font-size: 24px; margin-top:5px;">Connecting...</div>
-</div>
-           <div class="mceiaccess">
-             <div style="font-size: 24px; margin-bottom:5px;">Enter your access key</div>
-               <input spellcheck="false" id="access_key" name="access_key" type="text" placeholder="XXXX_XXX_XXXX" class="form-control input" required="true">
-               <div class="logmssg"></div>
-               <div class="btn btn-default access_btn">Login</div>
-               <div class="bottom_key_info" style="
-      margin-top: 20px;
-  ">
-      <span class="text-mute"><a href="https://dinosaur.selly.store/product/a57674a7" title="https://dinosaur.selly.store/product/a57674a7" target="_blank">Click here to buy instant access key</a></span>
-      <br><br><br>
-      <span class="text-mute">Free Trial Key: <pre>tria2_lcOdG#e5_(kf_anczsHz_X__34H1fz</pre></span>
-      <div class="github"></div>
-  </div></div>
-             </center></div>
-             <div class="brightx" style="position:absolute; bottom:5px;right:5px;"><div class="updatehold"></div></div>
-         </div>
-
-<ul class="nav nav-tabs"><!DOCTYPE html><!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Mass Anime Downloader - @Zebraslive</title>
-
-    <link rel="stylesheet" type="text/css" href="./styles.css">
 <style>.ctabii {white-space: nowrap;
-  max-width: 466px;
+width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;} .panel-heading {
+    text-overflow: ellipsis;} .rightffbz {    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 37px;
+    padding: 3px;
+    padding-right: 10px;
+    background: #8a5050;
+    padding-left: 10px;
+    border-top-right-radius: 5px;} .panel-heading {
   cursor: pointer;
   padding: 0;
 } .panel-default {    border-color: #545454 !important;}
 .mainpadded {overflow: auto;} .rightbtnzxx {display: inline-block;
     float: right;
     position: relative;
-    height: 38px;}
+    height: 38px;} .panel-title {position:relative;}
 .panel-title a {
   display: block;
   padding: 10px 15px;
 } .panel-default>.panel-heading {    border: none !important;
     color: #d2d2d2;
     background-color: #2f3344d9;
-    border-color: #464646;} .panel-body {    border-top-color: #565656 !important;} .panel {    background: rgba(74, 78, 97, 0.72);}</style>
+    border-color: #464646;} .panel-body {    border-top-color: #565656 !important;} .panel {    background: rgba(74, 78, 97, 0.72);} .csproixtx {display:none;}</style>
   </head>
   <body>
 
@@ -127,7 +91,7 @@
 	 Status: <span class="status">idle</span>
   </div>
              </div>
-  <center><div class="loaderf"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></center>
+
 
  <div class="panel-group anime_content" id="acfx">
 
@@ -137,14 +101,12 @@
     <thead>
       <tr>
         <th>Episode #</th>
-        <th>Quality</th>
         <th>Status</th>
       </tr>
     </thead>
     <tbody id="result">
       <tr>
         <td>Episode 1</td>
-        <td>1250x1080</td>
         <td>qued</td>
       </tr>
 
@@ -168,7 +130,8 @@
 <div class="form-group">
   <label for="usr">Proxy retry:</label>
   <input id="toggle-event1" type="checkbox" data-toggle="toggle">
-  <div style="display:inline-block;"><input type="text" placeholder="ip:port" class="form-control input-sm" id="proxydx"></div>
+  <div style="display:inline-block;"><input type="text" placeholder="http://ip:port" class="form-control input-sm" id="proxydx"></div>
+  <div class="csproixtx"><span class="text-mute text-sm"><small>Only one proxy retry per episode. all retries after are direct. Only use if proxy is reliable and fast.</small></span></div>
 </div>
       <div class="statsBoxcx">
         Access key data proxy usage
@@ -241,7 +204,7 @@ const store = new Store();
   require('ssl-root-cas').inject();
   const loopsy = [];
 var startDate;
-var currentVersion = '4.3';
+var currentVersion = '5.8';
 var vbump = false;
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
@@ -291,8 +254,10 @@ $(function(){
   $('#toggle-event1').change(function() {
     if ($(this).prop('checked')) {
       $('#proxydx').fadeIn(10);
+      $('.csproixtx').fadeIn(10);
     } else {
       $('#proxydx').fadeOut(10);
+       $('.csproixtx').fadeOut(10);
     }
 
    })
@@ -312,17 +277,33 @@ socket.on('connect', () => {
 });
 
 
-function downloadFile(file_url , targetPath, progressElement){
+function downloadFile(file_url , targetPath, progressElement, proxy_retry = false){
     // Save variable to know progress
     var received_bytes = 0;
     var total_bytes = 0;
-
+if (proxy_retry !== false) {
+ $('.prelogs').prepend("\n"+'Starting proxy retry.. '+file_url+' target = '+targetPath);
+ var ishgi = $('#proxydx').val().split(':');
+    var req = request({
+        method: 'GET',
+        uri: file_url,
+        timeout:66000,
+         proxy: $('#proxydx').val(),
+        rejectUnauthorized: false,
+      requestCert: false,
+      headers: {
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+           }
+    });
+} else {
     var req = request({
         method: 'GET',
         uri: file_url,
         rejectUnauthorized: false,
       requestCert: true,
     });
+}
+    
 
     var out = fs.createWriteStream(targetPath);
     req.pipe(out);
@@ -330,7 +311,10 @@ function downloadFile(file_url , targetPath, progressElement){
     req.on('response', function ( data ) {
         // Change the total bytes value to get progress later.
         total_bytes = parseInt(data.headers['content-length' ]);
-
+if (proxy_retry !== false) {
+    $('.prelogs').prepend("\n"+JSON.stringify(data.headers)+'response '+data.statusCode+' returned from proxy! '+data);
+    console.log('response '+data.statusCode+' returned from proxy! '+data);
+}
         // if (data.statusCode === 200 || data.statusCode == 200) {
         //   progressElement.text(data.statusCode);
         // } else {
@@ -354,19 +338,23 @@ req.on('error', function(err) {
     req.on('end', function() {
         var stats = fs.statSync(targetPath)
 var fileSizeInBytes = stats["size"]
- if (fileSizeInBytes <= 9500) {
+ if (fileSizeInBytes <= 9500) { //failed likely due to mp4upload rate limits.
      if ($('#toggle-event1').prop('checked') && progressElement.attr('proxy-retries') < 1) {
-         var ishgigz = parseInt(progressElement.attr('proxy-retries'))++;
+         $('.prelogs').prepend("\n Attempting proxy retry...");
+         var ishgigz = parseInt(progressElement.attr('proxy-retries'))+1;
          progressElement.attr('proxy-retries', ishgigz);
-         console.log('proxy retry feature is currently being worked on');
-     } else {
+          progressElement.html('<span class="text-warning">proxy-try..</span>');
+         downloadForce(progressElement, true); //rerun download with proxy enabled.
 
+
+     } else {
+progressElement.attr('status', 'waiting');
+     var curretriesx = progressElement.attr('retries');
+         progressElement.attr('retries', parseInt(curretriesx)+1);
+progressElement.html('<span class="text-danger">retry</span>');
      }
 
-    progressElement.attr('status', 'waiting');
-     var curretriesx = progressElement.attr('retries');
-         progressElement.attr('retries', curretriesx+1);
-progressElement.html('<span class="text-danger">retry</span>');
+    
 } else {
   progressElement.attr('status', 'done');
 progressElement.text('Done!');
@@ -407,10 +395,7 @@ function output_episodes(data, apid) {
 
 stopTime();
 }
-function downloadForce(dthis) {
-  var zonenzi = $('#zonename').val();
-  var customerid = $('#customerid').val();
-  var zonepass = $('#zonepass').val();
+function downloadForce(dthis, proxy_retry = false) {
  var ziidiug = dthis.attr('serverID');
   var fileurl = dthis.attr('link');
   var slugiucu = dthis.attr('slugx');
@@ -437,8 +422,12 @@ function downloadForce(dthis) {
       request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, rejectUnauthorized: false, requestCert: true, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
            var maindownloadurl = encodeURI(httpResponse.headers.location);
            if (maindownloadurl.includes('mp4upload')) {
+if (proxy_retry !== false) {
+  downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis, true); //run with proxy.
+} else {
+  downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
+}
 
-             downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
            } else {
              console.log('error with grabbing url');
            }
@@ -551,7 +540,7 @@ socket.on('search_results', function(data) {
   socket.emit('update stats');
    $('.results_search').html(data);
    $('.item img').each(function() {
-       var zhig = $(this).attr('src').replace('//static.9anime.ru/files', 'https://static.9anime.ru/files');
+       var zhig = $(this).attr('src').replace('//static.9anime.ru/', 'https://static.9anime.ru/');
       $(this).attr('src', zhig);
    });
    $('a.name').each(function() {
@@ -566,11 +555,15 @@ socket.on('search_results', function(data) {
   //$('.selected_title').html(titleih);
   $('.scrape_url').val(valudiig);
   $('.acz_f').removeClass('in');
-$('.anime_content').append('<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" link="'+valudiig+'" data-parent="#acfx" so="c_'+sluxix+'" href="#c_'+sluxix+'" class="activeheader ctabii">'+titleih+'</a></h4></div><div id="c_'+sluxix+'" class="acz_f panel-collapse collapse in"><div class="panel-body" tid="c_'+sluxix+'">'+titleih+'</div></div></div>');
+$('.anime_content').append('<div class="panel panel-default anime_panelz" cid="c_'+sluxix+'"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" link="'+valudiig+'" data-parent="#acfx" so="c_'+sluxix+'" href="#c_'+sluxix+'" class="activeheader ctabii">'+titleih+'</a><div class="rightffbz" cid="c_'+sluxix+'"><i class="fa fa-times" style="vertical-align: -webkit-baseline-middle;"></i></div></h4></div><div id="c_'+sluxix+'" class="acz_f panel-collapse collapse in"><div class="panel-body" tid="c_'+sluxix+'"><center><div>Grabbing Episodes</div><div class="loaderf"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></center></div></div></div>');
    $('#'+sluxix+'').tab('show');
   $('.current_series').fadeIn(10);
   $('#myModal').modal('hide');
   $('.status').html('Click grab episodes button');
+  $('.rightffbz').click(function() {
+     var cidi = $(this).attr('cid');
+     $('.anime_panelz[cid='+cidi+']').remove();
+  });
 if (valudiig.length > 6) {
 start();
 socket.emit('grab episodes', valudiig, 'c_'+sluxix);
@@ -700,7 +693,7 @@ $('.prelogs').prepend("\n"+data);
 
      });
    } else {
-
+$('.updatehold').eq(0).html('version: '+d.version);
    }
 
  });
@@ -718,1304 +711,6 @@ $('.prelogs').prepend("\n"+data);
   }
   $(this).addClass('activeheader');
 });
-});
-
-const randomString = () => {
-	const alphanumeric = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-	let res = '';
-	for (let i = 0; i < 10; i++) {
-		res += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
-	}
-	return res;
-}
-</script>
-
-  </body>
-</html>
-
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Mass Anime Downloader - @Zebraslive</title>
-
-    <link rel="stylesheet" type="text/css" href="./styles.css">
-<style>.ctabii {white-space: nowrap;
-  max-width: 466px;
-    overflow: hidden;
-    text-overflow: ellipsis;} .panel-heading {
-  cursor: pointer;
-  padding: 0;
-} .panel-default {    border-color: #545454 !important;}
-.mainpadded {overflow: auto;} .rightbtnzxx {display: inline-block;
-    float: right;
-    position: relative;
-    height: 38px;}
-.panel-title a {
-  display: block;
-  padding: 10px 15px;
-} .panel-default>.panel-heading {    border: none !important;
-    color: #d2d2d2;
-    background-color: #2f3344d9;
-    border-color: #464646;} .panel-body {    border-top-color: #565656 !important;} .panel {    background: rgba(74, 78, 97, 0.72);}</style>
-  </head>
-  <body>
-
-   <div class="">
-     <div id="title-bar-btns" style="-webkit-app-region: drag; display:block;">
-       <span>Mass Anime Downloader</span>
-          <div class="rightbuttons">
-            <button id="min-btn" class="btn btn-default btn-sm"><i class="fa fa-window-minimize"></i></button>
-          <button id="close-btn" class="btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-            </div>
-     </div>
-
-     </div>
-     <div class="access_key_hold">
-
-         <div class="centerinputd"><center>
-<div class="loaderholdfii"><div class="loaderff_x"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
- <div style="font-size: 24px; margin-top:5px;">Connecting...</div>
-</div>
-           <div class="mceiaccess">
-             <div style="font-size: 24px; margin-bottom:5px;">Enter your access key</div>
-               <input spellcheck="false" id="access_key" name="access_key" type="text" placeholder="XXXX_XXX_XXXX" class="form-control input" required="true">
-               <div class="logmssg"></div>
-               <div class="btn btn-default access_btn">Login</div>
-               <div class="bottom_key_info" style="
-      margin-top: 20px;
-  ">
-      <span class="text-mute"><a href="https://dinosaur.selly.store/product/a57674a7" title="https://dinosaur.selly.store/product/a57674a7" target="_blank">Click here to buy instant access key</a></span>
-      <br><br><br>
-      <span class="text-mute">Free Trial Key: <pre>tria2_lcOdG#e5_(kf_anczsHz_X__34H1fz</pre></span>
-      <div class="github"></div>
-  </div></div>
-             </center></div>
-             <div class="brightx" style="position:absolute; bottom:5px;right:5px;"><div class="updatehold"></div></div>
-         </div>
-
-<ul class="nav nav-tabs">
-  <li class="" style="cursor:pointer;"><a data-toggle="modal" data-target="#myModal" aria-expanded="false">Search</a></li>
-    <li class="active"><a data-toggle="tab" href="#home">Main</a></li>
-    <li><a data-toggle="tab" href="#menu1">Debug</a></li>
-    <li><a data-toggle="tab" href="#menu2">Settings</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="home" class="tab-pane active">
-     <div class="mainpadded">
-<div class="subscriptions">
-
-  <input class="scrape_url input input-sm form-control" type="text" placeholder="" value="">
-</div>
-<div class="current_series">
-  <div class="seriesTitle">Selected Title: <span class="selected_title"></span></div>
-</div>
-<div class="startbuttons"><button class="viewfilesx btn btn-default">View Files</button>
-
-    </div>
-  <div class="updates">
-	 Status: <span class="status">idle</span>
-  </div>
-             </div>
-  <center><div class="loaderf"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></center>
-
- <div class="panel-group anime_content" id="acfx">
-
- </div>
-  <div id="result">
-    <!-- <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Episode #</th>
-        <th>Quality</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="result">
-      <tr>
-        <td>Episode 1</td>
-        <td>1250x1080</td>
-        <td>qued</td>
-      </tr>
-
-    </tbody>
-  </table> -->
-  </div>
-  <div class="timetx"></div>
-   <div class="brightx" style="position:absolute; bottom:5px;right:5px;"><div class="updatehold"></div></div>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-     Logs<br>
-     <pre class="prelogs"></pre>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-
-
-
-<button class="btn btn-default btn-sm openConsole">Open Dev Tools</button>
-
-<div style="margin-bottom: 5px;"><span>Auto Download <input id="toggle-event2" type="checkbox" data-toggle="toggle"></span></div>
-<div class="form-group">
-  <label for="usr">Proxy retry:</label>
-  <input id="toggle-event1" type="checkbox" data-toggle="toggle">
-  <div style="display:inline-block;"><input type="text" placeholder="ip:port" class="form-control input-sm" id="proxydx"></div>
-</div>
-      <div class="statsBoxcx">
-        Access key data proxy usage
-<div class="bandwidthf"></div>
-      </div>
-
-
-    </div>
-
-  </div>
-  <!-- Modal -->
-  <div class="modal" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content blok">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Search for Anime</h4>
-        </div>
-        <div class="modal-body">
-          <div class="input-group">
-
-    <input type="text" class="form-control searchInput" placeholder="">
-    <span class="input-group-btn">
-      <button class="btn btn-default esserbtn searchbutton" type="button"><i class="glyphicon glyphicon-search"></i></button>
-    </span>
-            <div class="overlayinputk"> <div class="spinner">
-  <div class="spinner__item1"></div>
-  <div class="spinner__item2"></div>
-  <div class="spinner__item3"></div>
-  <div class="spinner__item4"></div>
-</div></div>
-  </div>
-
-
-<div class="results_search">
-
-  </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-  <!--<link rel="stylesheet" href="https://unpkg.com/izitoast/dist/css/iziToast.min.css">-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" integrity="sha512-hievggED+/IcfxhYRSr4Auo1jbiOczpqpLZwfTVL/6hFACdbI3WQ8S9NCX50gsM9QVE+zLk/8wb9TlgriFbX+Q==" crossorigin="anonymous" />
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!--<script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js" integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w==" crossorigin="anonymous"></script>
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-
-<script>
-  var request = require('request');
-  const cheerio = require('cheerio');
-const shell = require('electron').shell;
-const Store = require('electron-store');
-const store = new Store();
-  var fs = require('fs');
-  const app = require('electron').remote.app
-  require('ssl-root-cas').inject();
-  const loopsy = [];
-var startDate;
-var currentVersion = '3.9';
-var vbump = false;
-function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return '0 Bytes';
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-function string_to_slug (str) {
-    str = str.replace(/^\s+|\s+$/g, ''); // trimf
-    str = str.toLowerCase();
-
-    // remove accents, swap ñ for n, etc
-    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaeeeeiiiioooouuuunc------";
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid cha
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
-}
-var githubURL = __dirname+'/../../github.png';
-var resourcesx = __dirname+'\\';
-$('.github').html('<br><br><br><a style="opacity:0.6;" href="https://github.com/Zebraslive/Mass-Anime-Downloader" title="https://github.com/Zebraslive/Mass-Anime-Downloader" target="_blank"><img style="  width: 32px;height: 32px;" src="'+githubURL+'"></a><br>');
-function mp4upload(urlf) {
-  var mxisisii = urlf.split('.com/')[1];
-  if (mxisis.includes('embed-')) {
-    var shuid = mxisis.split('embed-')[1];
-    var mfidxsx = shuid.split('.html')[0];
-  } else {
-    var mfidxsx = mxisisii;
-  }
-  request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-    return httpResponse.headers.location;
-});
-}
-var wf_key = '';
-$(function(){
-  $('#toggle-event1').change(function() {
-    if ($(this).prop('checked')) {
-      $('#proxydx').fadeIn(10);
-    } else {
-      $('#proxydx').fadeOut(10);
-    }
-
-   })
-var currentxx = [];
-var socket = io.connect('https://bda.life:3000');
-socket.on('connect', () => {
-    var socketConnected;
-    window.socketConnected = socket.connected;
-    $('.loaderholdfii').remove();
-    $('.mceiaccess').fadeIn(10);
-    if (window.wf_key.length > 3) {
-      $('.status').html('Reconnected! (happens when server restarts from error or updates)');
-      socket.emit('open the gate', window.wf_key.length);
-
-    }
-    socket.emit('check for updates', currentVersion, vbump);
-});
-
-
-function downloadFile(file_url , targetPath, progressElement){
-    // Save variable to know progress
-    var received_bytes = 0;
-    var total_bytes = 0;
-
-    var req = request({
-        method: 'GET',
-        uri: file_url,
-        rejectUnauthorized: false,
-      requestCert: true,
-    });
-
-    var out = fs.createWriteStream(targetPath);
-    req.pipe(out);
-
-    req.on('response', function ( data ) {
-        // Change the total bytes value to get progress later.
-        total_bytes = parseInt(data.headers['content-length' ]);
-
-        // if (data.statusCode === 200 || data.statusCode == 200) {
-        //   progressElement.text(data.statusCode);
-        // } else {
-        //   progressElement.text("Error wait for downloads to finish "+data.statusCode);
-        // }
-    });
- progressElement.attr('status', 'downloading');
-    req.on('data', function(chunk) {
-        // Update the received bytes
-        received_bytes += chunk.length;
-
-        showProgress(received_bytes, total_bytes, progressElement);
-    });
-req.on('error', function(err) {
-        $('.status').text('download failed '+err);
-         progressElement.attr('status', 'waiting');
-         var curretriesx = progressElement.attr('retries');
-         progressElement.attr('retries', curretriesx+1);
-        progressElement.html('<span class="text-danger">retry</span>');
-    });
-    req.on('end', function() {
-        var stats = fs.statSync(targetPath)
-var fileSizeInBytes = stats["size"]
- if (fileSizeInBytes <= 9500) {
-     if ($('#toggle-event1').prop('checked') && progressElement.attr('proxy-retries') < 1) {
-         var ishgigz = progressElement.attr('proxy-retries')+1;
-         progressElement.attr('proxy-retries', ishgigz);
-         console.log('proxy retry feature is currently being worked on');
-     } else {
-
-     }
-
-    progressElement.attr('status', 'waiting');
-     var curretriesx = progressElement.attr('retries');
-         progressElement.attr('retries', curretriesx+1);
-progressElement.html('<span class="text-danger">retry</span>');
-} else {
-  progressElement.attr('status', 'done');
-progressElement.text('Done!');
-}
-    });
-}
-function truncf(decimal,n=1){
-  let x = decimal + ''; // string
-  return x.lastIndexOf('.')>=0?parseFloat(x.substr(0,x.lastIndexOf('.')+(n+1))):decimal; // You can use indexOf() instead of lastIndexOf()
-}
-function showProgress(received,total, progressElement){
-    var percentage = (received * 100) / total;
-    progressElement.html('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="'+truncf(percentage)+'"aria-valuemin="0" aria-valuemax="100" style="width:'+truncf(percentage)+'%">'+truncf(percentage)+'%</div></div>');
-}
-
-function output_episodes(data, apid) {
-    $('.loaderf').fadeOut(100);
-    $('.start').text('Grab Episodes');
-	    var dataff = "";
-      var linksf = "";
-	    for (var i = 0; i < data.length; i++){
-        data[i].server = data[i].server.replace('?autostart=true','');
-  dataff += data[i].server+'\n';
-  linksf += "<button class='downloadfile btn btn-default' retries='0' proxy-retries='0' last_attempt='0' status='waiting' serverID='"+data[i].server+"' slugx='"+data[0].slug+"' filename='"+data[0].slug+"_episode_"+data[i].ep+".mp4' link=''>Episode "+data[i].ep+"</button>";
-	    }
-      $('.panel-body[tid='+apid+']').html('<div class="totals"></div><textarea class="form-control textarea mainboxxz">'+dataff+'</textarea><br>'+linksf);
-
-   $('.downloadfile').click(function() {
-     if ($(this).attr('status') === "done" || $(this).attr('status') === "downloading") {
-
-     } else {
-          var timfmpx = Math.floor(Date.now() / 1000);
-          $(this).attr('last_attempt', timfmpx);
-       downloadForce($(this));
-     }
-
-   });
-$('textarea').val($('textarea').val().replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm,""));
-var textx = $('.textarea').val();
-	var linefs = textx.split(/\r|\r\n|\n/);
-var countf = linefs.length;
-$('.totals').html('Episodes Grabbed: '+countf);
-//$('.status').html('Completed!');
-stopTime();
-}
-function downloadForce(dthis) {
-  var zonenzi = $('#zonename').val();
-  var customerid = $('#customerid').val();
-  var zonepass = $('#zonepass').val();
- var ziidiug = dthis.attr('serverID');
-  var fileurl = dthis.attr('link');
-  var slugiucu = dthis.attr('slugx');
-  if (fs.existsSync(".\\anime_downloads\\"+slugiucu)) {
-
-} else {
-  fs.mkdirSync(".\\anime_downloads\\"+slugiucu, { recursive: true })
-}
-     var filename = dthis.attr('filename');
-  var countryArray = new Array('us', 'ca');
-  var randomCountry = countryArray[Math.floor(Math.random() * countryArray.length)];
-    var timestampx = Math.floor(Date.now() / 1000);
-
-      if (fileurl.includes('mp4upload')) { //already decoded.
-         dthis.text("Starting");
-         var mxisisii = fileurl.split('.com/')[1];
-         if (mxisisii.includes('embed-')) {
-           var shuid = mxisisii.split('embed-')[1];
-           var mfidxsx = shuid.split('.html')[0];
-         } else {
-           var mfidxsx = mxisisii;
-         }
-
-      request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, rejectUnauthorized: false, requestCert: true, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-           var maindownloadurl = encodeURI(httpResponse.headers.location);
-           if (maindownloadurl.includes('mp4upload')) {
-
-             downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
-           } else {
-             console.log('error with grabbing url');
-           }
-       });
-
-      } else {
-        dthis.text("Decoding");
-  var timestampxx = Math.floor(Date.now() / 1000);
-  socket.emit('decode episode', ziidiug);
-
-      }
-
-
-}
-
-function stopTime() {
-
-  var startTime = startDate.getTime();
-  var date_now = new Date();
-  var time_now = date_now.getTime();
-  var time_diff = time_now - startTime;
-  var seconds_elapsed = Math.floor(time_diff / 1000);
-  //$('.status').html('Completed in '+seconds_elapsed+' Seconds');
-}
-
-function start() {
-  startDate = new Date();
-}
-$('.settings').click(function() {
-  if ($(this).hasClass('isetx')) {
-    $('.settings').removeClass('isetx');
-$('.settingsBox').fadeOut(100);
-  } else {
-     $('.settings').addClass('isetx');
-$('.settingsBox').fadeIn(100);
-  }
-
-});
-$('.searchbutton').click(function() {
-  var valuexx = $('.searchInput').val();
-$('.overlayinputk').fadeIn(200);
-  socket.emit('search', valuexx);
-
-});
-$(".searchInput").keypress(function(e) {
-    if(e.keyCode == 13) {
-        $('.overlayinputk').fadeIn(200);
-         var valuexx = $('.searchInput').val();
-        socket.emit('search', valuexx);
-    }
-});
-socket.on('update usage stats', function(data) {
-  //console.log(data);
-  if (data.data_used <= 0) {
-
-  } else {
-    data.data_used = formatBytes(data.data_used);
-  }
-  $('.bandwidthf').html('<div>Max data transfer: <span class="maxtransferdata">'+formatBytes(data.max_data)+'</span></div><div>Data used: <span class="datausedx">'+data.data_used+'</span></div>');
-
-});
-socket.on('decoded episode', function(code, body, hash) {
-  socket.emit('update stats');
-      var dthis = $('.downloadfile[serverID="'+hash+'"]');
-      var slugiucu = dthis.attr('slugx');
-         var filename = dthis.attr('filename');
-  if (body.includes('Our firewall temporarily blocks your IP in 1 hour')) {
-
-     dthis.html('<span class="text-danger">retry</span>');
-     dthis.attr('status', 'waiting');
-  $('.status').html('this proxy Ip got temp blocked, ip will change on retry.');
-        return false;
-      }
-         var izhgixx = JSON.parse(body);
-
-         if (code === 200 && typeof izhgixx.target !== "undefined" && izhgixx.target.includes('mp4upload')) {
-
-  dthis.attr('link', izhgixx.target);
-  var mxisisii = izhgixx.target.split('.com/')[1];
-  if (mxisisii.includes('embed-')) {
-    var shuid = mxisisii.split('embed-')[1];
-    var mfidxsx = shuid.split('.html')[0];
-  } else {
-    var mfidxsx = mxisisii;
-  }
-
-  request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, rejectUnauthorized: false, requestCert: true, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-       var maindownloadurl = encodeURI(httpResponse.headers.location);
-    if (maindownloadurl.includes('mp4upload')) {
-
-      downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
-    } else {
-      console.log('error with grabbing url');
-    }
-  });
-
-
-
-         dthis.text("Starting");
-         } else {
-              var curretriesx = dthis.attr('retries');
-         dthis.attr('retries', curretriesx+1);
-           dthis.attr('status', 'waiting');
-           dthis.html('<span class="text-danger">retry</span>');
-         }
-});
-socket.on('search_results', function(data) {
-  $('.overlayinputk').fadeOut(200);
-
-  socket.emit('update stats');
-   $('.results_search').html(data);
-   $('.item img').each(function() {
-       var zhig = $(this).attr('src').replace('//static.9anime.ru/files', 'https://static.9anime.ru/files');
-      $(this).attr('src', zhig);
-   });
-   $('a.name').each(function() {
-     var teihxi = $(this).text();
-     var idlink = $(this).attr('href');
-     $(this).replaceWith('<div><div style="display: inline-block;">'+teihxi+'</div> <div class="btn btn-default seriesGrabbb" title="'+teihxi+'" link="'+idlink+'">Grab</div></div>');
-   });
-  $('.seriesGrabbb').click(function() {
-  var valudiig = $(this).attr('link');
-  var titleih = $(this).attr('title');
-  var sluxix = string_to_slug(randomString()+titleih);
-  $('.selected_title').html(titleih);
-  $('.scrape_url').val(valudiig);
-  $('.acz_f').removeClass('in');
-$('.anime_content').append('<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" link="'+valudiig+'" data-parent="#acfx" so="c_'+sluxix+'" href="#c_'+sluxix+'" class="activeheader ctabii">'+titleih+'</a></h4></div><div id="c_'+sluxix+'" class="acz_f panel-collapse collapse in"><div class="panel-body" tid="c_'+sluxix+'">'+titleih+'</div></div></div>');
-   $('#'+sluxix+'').tab('show');
-  $('.current_series').fadeIn(10);
-  $('#myModal').modal('hide');
-  $('.status').html('Click grab episodes button');
-if (valudiig.length > 6) {
-start();
-socket.emit('grab episodes', valudiig, 'c_'+sluxix);
-$('.loaderf').fadeIn(100);
-
-} else {
-$('.status').html('Error, Select a series from Search to grab episodes');
-}
-  });
-});
-
-$('.start').click(function() {
-  var dataxx = $('.scrape_url').val();
-if (dataxx.length > 6) {
-start();
-socket.emit('grab episodes', dataxx);
-//grabEpisodes(dataxx);
- $('.loaderf').fadeIn(100);
- if ($(this).hasClass('closeb')) {
-   $(this).removeClass('closeb');
-$(this).text('Start');
-return false;
- } else {
-   $(this).addClass('closeb');
-$(this).text('Running');
- }
-} else {
-$('.status').html('Error, Select a series from Search to grab episodes');
-}
-
-
-
-
-
-});
-
-$(document).on('click', 'a[href^="http"]', function(event) {
-    event.preventDefault();
-    shell.openExternal(this.href);
-});
-$('.access_btn').click(function() {
-  $(this).text('Loading...');
-  var keyval = $('#access_key').val().trim();
-  window.wf_key = keyval;
-  socket.emit('open the gate', keyval);
-
-});
-socket.on('episodes grabbed', function(episodes, cid) {
-  $('.status').html('Click on episodes below to download');
-    output_episodes(episodes, cid);
-});
-socket.on('access granted 007', function(data) {
-  if (data.data_used <= 0) {
-
-  } else {
-    data.data_used = formatBytes(data.data_used);
-  }
-  $('.bandwidthf').html('<div>Max data transfer: <span class="maxtransferdata">'+formatBytes(data.max_data)+'</span></div><div>Data used: <span class="datausedx">'+data.data_used+'</span></div>');
-
-  var keyvfal = $('#access_key').val().trim();
-  store.set('api_access_key', keyvfal);
-//   fs.writeFile('./p_k.txt', keyvfal, function (err) {
-//   if (err) throw err;
-//   console.log('Saved key!');
-// });
-$('.access_key_hold').remove();
-});
-socket.on('access denied', function(data) {
-$('.logmssg').html('<span class="text-danger">Error: '+data+'</span>');
-$('.access_btn').text('Login');
-});
-
-socket.on('status', function(data) {
-$('.status').html(data);
-$('.prelogs').prepend("\n"+data);
-});
-socket.on('prelogs', function(data) {
-$('.prelogs').prepend("\n"+data);
-});
- // iziToast.info({position: "center", title: 'Hello', message: 'iziToast.info()'});
- //   iziToast.success({timeout: 5000, icon: 'fa fa-chrome', title: 'OK', message: 'iziToast.sucess() with custom icon!'});
- //   iziToast.warning({position: "bottomRight", title: 'Caution', message: '日本語環境のテスト'});
- // iziToast.error({title: 'Error', message: 'Illegal operation'});
- socket.on('updates checked', function(d) {
-
-   if (d.update === 'yes') {
-       var totalbtes = 0;
-     $('.updatehold').html('<br><br><div class="updatesVz text-warning"><div>An update is available! </div><button class="btn btn-default updateappx">Update App</button></div>');
-     $('.updateappx').click(function() {
-       console.log('updating..');
-       var i;
-       var file_url = "";
-       var completeedup = 0;
-         var timestfampx = Math.floor(Date.now() / 1000);
-         for (let i = 0; i < d.files.length; i++) {
-               $('.updatehold').html('Updating files..');
-
-  setTimeout(function() {
-   var siffhgi = resourcesx+d.files[i].path;
-                var urlz = d.files[i].url;
-         $('.updatehold').html(urlz);
-         var req = request({
-             method: 'GET',
-             uri: urlz+'?ts='+timestfampx,
-             rejectUnauthorized: false,
-           requestCert: true,
-         });
-
-   var out = fs.createWriteStream(siffhgi);
-         req.pipe(out);
-       $('.prelogs').prepend("\n updating.. "+siffhgi);
-       completeedup = completeedup+1;
-       if (completeedup >= d.files.length) {
-       $('.prelogs').prepend("\n updates finished!");
-       $('.status').html('restarting after updates...');
-       $('.updatehold').html('App Updated! Restarting...');
- setTimeout(function() {
-
- app.relaunch();
- app.exit();
- }, 3500);
-
-       }
-  }, 1001);
-}
-
-
-     });
-   } else {
-
-   }
-
- });
- $(".panel-heading a").on("click", function(e) {
-
-  if (
-    $(this)
-    .parents(".panel")
-    .children(".panel-collapse")
-    .hasClass("in")
-  ) {
-    e.stopPropagation();
-  } else {
-    $('.panel-heading a').removeClass('activeheader');
-  }
-  $(this).addClass('activeheader');
-});
-});
-
-const randomString = () => {
-	const alphanumeric = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-	let res = '';
-	for (let i = 0; i < 10; i++) {
-		res += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
-	}
-	return res;
-}
-</script>
-
-  </body>
-</html>
-
-  <li class="" style="cursor:pointer;"><a data-toggle="modal" data-target="#myModal" aria-expanded="false">Search</a></li>
-    <li class="active"><a data-toggle="tab" href="#home">Main</a></li>
-    <li><a data-toggle="tab" href="#menu1">Debug</a></li>
-    <li><a data-toggle="tab" href="#menu2">Settings</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="home" class="tab-pane active">
-     <div class="mainpadded">
-<div class="subscriptions">
-
-  <input class="scrape_url input input-sm form-control" type="text" placeholder="" value="">
-</div>
-<div class="current_series">
-  <div class="seriesTitle">Selected Title: <span class="selected_title"></span></div>
-</div>
-<div class="startbuttons"><button class="viewfilesx btn btn-default">View Files</button>
-<button class="start btn btn-default">Grab Episodes</button>
-    </div>
-  <div class="updates">
-	 Status: <span class="status">idle</span>
-  </div>
-             </div>
-  <center><div class="loaderf"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></center>
-  <div id="result">
-    <!-- <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Episode #</th>
-        <th>Quality</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="result">
-      <tr>
-        <td>Episode 1</td>
-        <td>1250x1080</td>
-        <td>qued</td>
-      </tr>
-
-    </tbody>
-  </table> -->
-  </div>
-  <div class="timetx"></div>
-   <div class="brightx" style="position:absolute; bottom:5px;right:5px;"><div class="updatehold"></div></div>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-     Logs<br>
-     <pre class="prelogs"></pre>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-
-
-
-<button class="btn btn-default btn-sm openConsole">Open Dev Tools</button>
-
-<div style="margin-bottom: 5px;"><span>Auto Download <input id="toggle-event2" type="checkbox" data-toggle="toggle"></span></div>
-<div class="form-group">
-  <label for="usr">Proxy retry:</label>
-  <input id="toggle-event1" type="checkbox" data-toggle="toggle">
-  <div style="display:inline-block;"><input type="text" placeholder="ip:port" class="form-control input-sm" id="proxydx"></div>
-</div>
-      <div class="statsBoxcx">
-        Access key data proxy usage
-<div class="bandwidthf"></div>
-      </div>
-
-
-    </div>
-
-  </div>
-  <!-- Modal -->
-  <div class="modal" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content blok">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Search for Anime</h4>
-        </div>
-        <div class="modal-body">
-          <div class="input-group">
-
-    <input type="text" class="form-control searchInput" placeholder="">
-    <span class="input-group-btn">
-      <button class="btn btn-default esserbtn searchbutton" type="button"><i class="glyphicon glyphicon-search"></i></button>
-    </span>
-            <div class="overlayinputk"> <div class="spinner">
-  <div class="spinner__item1"></div>
-  <div class="spinner__item2"></div>
-  <div class="spinner__item3"></div>
-  <div class="spinner__item4"></div>
-</div></div>
-  </div>
-
-
-<div class="results_search">
-
-  </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-  <!--<link rel="stylesheet" href="https://unpkg.com/izitoast/dist/css/iziToast.min.css">-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" integrity="sha512-hievggED+/IcfxhYRSr4Auo1jbiOczpqpLZwfTVL/6hFACdbI3WQ8S9NCX50gsM9QVE+zLk/8wb9TlgriFbX+Q==" crossorigin="anonymous" />
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!--<script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js" integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w==" crossorigin="anonymous"></script>
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-
-<script>
-  var request = require('request');
-  const cheerio = require('cheerio');
-const shell = require('electron').shell;
-const Store = require('electron-store');
-const store = new Store();
-  var fs = require('fs');
-  const app = require('electron').remote.app
-  require('ssl-root-cas').inject();
-  const loopsy = [];
-var startDate;
-var currentVersion = '3.9';
-var vbump = false;
-function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return '0 Bytes';
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-function string_to_slug (str) {
-    str = str.replace(/^\s+|\s+$/g, ''); // trimf
-    str = str.toLowerCase();
-
-    // remove accents, swap ñ for n, etc
-    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaeeeeiiiioooouuuunc------";
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid cha
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
-}
-var githubURL = __dirname+'/../../github.png';
-var resourcesx = __dirname+'\\';
-$('.github').html('<br><br><br><a style="opacity:0.6;" href="https://github.com/Zebraslive/Mass-Anime-Downloader" title="https://github.com/Zebraslive/Mass-Anime-Downloader" target="_blank"><img style="  width: 32px;height: 32px;" src="'+githubURL+'"></a><br>');
-function mp4upload(urlf) {
-  var mxisisii = urlf.split('.com/')[1];
-  if (mxisis.includes('embed-')) {
-    var shuid = mxisis.split('embed-')[1];
-    var mfidxsx = shuid.split('.html')[0];
-  } else {
-    var mfidxsx = mxisisii;
-  }
-  request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-    return httpResponse.headers.location;
-});
-}
-var wf_key = '';
-$(function(){
-  $('#toggle-event1').change(function() {
-    if ($(this).prop('checked')) {
-      $('#proxydx').fadeIn(10);
-    } else {
-      $('#proxydx').fadeOut(10);
-    }
-
-   })
-var currentxx = [];
-var socket = io.connect('https://bda.life:3000');
-socket.on('connect', () => {
-    var socketConnected;
-    window.socketConnected = socket.connected;
-    $('.loaderholdfii').remove();
-    $('.mceiaccess').fadeIn(10);
-    if (window.wf_key.length > 3) {
-      $('.status').html('Reconnected! (happens when server restarts from error or updates)');
-      socket.emit('open the gate', window.wf_key.length);
-
-    }
-    socket.emit('check for updates', currentVersion, vbump);
-});
-
-
-function downloadFile(file_url , targetPath, progressElement){
-    // Save variable to know progress
-    var received_bytes = 0;
-    var total_bytes = 0;
-
-    var req = request({
-        method: 'GET',
-        uri: file_url,
-        rejectUnauthorized: false,
-      requestCert: true,
-    });
-
-    var out = fs.createWriteStream(targetPath);
-    req.pipe(out);
-
-    req.on('response', function ( data ) {
-        // Change the total bytes value to get progress later.
-        total_bytes = parseInt(data.headers['content-length' ]);
-
-        // if (data.statusCode === 200 || data.statusCode == 200) {
-        //   progressElement.text(data.statusCode);
-        // } else {
-        //   progressElement.text("Error wait for downloads to finish "+data.statusCode);
-        // }
-    });
- progressElement.attr('status', 'downloading');
-    req.on('data', function(chunk) {
-        // Update the received bytes
-        received_bytes += chunk.length;
-
-        showProgress(received_bytes, total_bytes, progressElement);
-    });
-req.on('error', function(err) {
-        $('.status').text('download failed '+err);
-         progressElement.attr('status', 'waiting');
-         var curretriesx = progressElement.attr('retries');
-         progressElement.attr('retries', curretriesx+1);
-        progressElement.html('<span class="text-danger">retry</span>');
-    });
-    req.on('end', function() {
-        var stats = fs.statSync(targetPath)
-var fileSizeInBytes = stats["size"]
- if (fileSizeInBytes <= 9500) {
-     if ($('#toggle-event1').prop('checked') && progressElement.attr('proxy-retries') < 1) {
-         var ishgigz = progressElement.attr('proxy-retries')+1;
-         progressElement.attr('proxy-retries', ishgigz);
-         console.log('proxy retry feature is currently being worked on');
-     } else {
-         
-     }
-     
-    progressElement.attr('status', 'waiting');
-     var curretriesx = progressElement.attr('retries');
-         progressElement.attr('retries', curretriesx+1);
-progressElement.html('<span class="text-danger">retry</span>');
-} else {
-  progressElement.attr('status', 'done');
-progressElement.text('Done!');
-}
-    });
-}
-function truncf(decimal,n=1){
-  let x = decimal + ''; // string
-  return x.lastIndexOf('.')>=0?parseFloat(x.substr(0,x.lastIndexOf('.')+(n+1))):decimal; // You can use indexOf() instead of lastIndexOf()
-}
-function showProgress(received,total, progressElement){
-    var percentage = (received * 100) / total;
-    progressElement.html('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="'+truncf(percentage)+'"aria-valuemin="0" aria-valuemax="100" style="width:'+truncf(percentage)+'%">'+truncf(percentage)+'%</div></div>');
-}
-
-function output_episodes(data) {
-    $('.loaderf').fadeOut(100);
-    $('.start').text('Grab Episodes');
-	    var dataff = "";
-      var linksf = "";
-	    for (var i = 0; i < data.length; i++){
-        data[i].server = data[i].server.replace('?autostart=true','');
-  dataff += data[i].server+'\n';
-  linksf += "<button class='downloadfile btn btn-default' retries='0' proxy-retries='0' last_attempt='0' status='waiting' serverID='"+data[i].server+"' slugx='"+data[0].slug+"' filename='"+data[0].slug+"_episode_"+data[i].ep+".mp4' link=''>Episode "+data[i].ep+"</button>";
-	    }
-	$('#result').html('<div class="totals"></div><textarea class="form-control textarea mainboxxz">'+dataff+'</textarea><br>'+linksf);
-   $('.downloadfile').click(function() {
-     if ($(this).attr('status') === "done" || $(this).attr('status') === "downloading") {
-
-     } else {
-          var timfmpx = Math.floor(Date.now() / 1000);
-          $(this).attr('last_attempt', timfmpx);
-       downloadForce($(this));
-     }
-
-   });
-$('textarea').val($('textarea').val().replace(/^(?=\n)$|^\s*|\s*$|\n\n+/gm,""));
-var textx = $('.textarea').val();
-	var linefs = textx.split(/\r|\r\n|\n/);
-var countf = linefs.length;
-$('.totals').html('Episodes Grabbed: '+countf);
-//$('.status').html('Completed!');
-stopTime();
-}
-function downloadForce(dthis) {
-  var zonenzi = $('#zonename').val();
-  var customerid = $('#customerid').val();
-  var zonepass = $('#zonepass').val();
- var ziidiug = dthis.attr('serverID');
-  var fileurl = dthis.attr('link');
-  var slugiucu = dthis.attr('slugx');
-  if (fs.existsSync(".\\anime_downloads\\"+slugiucu)) {
-
-} else {
-  fs.mkdirSync(".\\anime_downloads\\"+slugiucu, { recursive: true })
-}
-     var filename = dthis.attr('filename');
-  var countryArray = new Array('us', 'ca');
-  var randomCountry = countryArray[Math.floor(Math.random() * countryArray.length)];
-    var timestampx = Math.floor(Date.now() / 1000);
-
-      if (fileurl.includes('mp4upload')) { //already decoded.
-         dthis.text("Starting");
-         var mxisisii = fileurl.split('.com/')[1];
-         if (mxisisii.includes('embed-')) {
-           var shuid = mxisisii.split('embed-')[1];
-           var mfidxsx = shuid.split('.html')[0];
-         } else {
-           var mfidxsx = mxisisii;
-         }
-
-      request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, rejectUnauthorized: false, requestCert: true, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-           var maindownloadurl = encodeURI(httpResponse.headers.location);
-           if (maindownloadurl.includes('mp4upload')) {
-
-             downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
-           } else {
-             console.log('error with grabbing url');
-           }
-       });
-
-      } else {
-        dthis.text("Decoding");
-  var timestampxx = Math.floor(Date.now() / 1000);
-  socket.emit('decode episode', ziidiug);
-
-      }
-
-
-}
-
-function stopTime() {
-
-  var startTime = startDate.getTime();
-  var date_now = new Date();
-  var time_now = date_now.getTime();
-  var time_diff = time_now - startTime;
-  var seconds_elapsed = Math.floor(time_diff / 1000);
-  //$('.status').html('Completed in '+seconds_elapsed+' Seconds');
-}
-
-function start() {
-  startDate = new Date();
-}
-$('.settings').click(function() {
-  if ($(this).hasClass('isetx')) {
-    $('.settings').removeClass('isetx');
-$('.settingsBox').fadeOut(100);
-  } else {
-     $('.settings').addClass('isetx');
-$('.settingsBox').fadeIn(100);
-  }
-
-});
-$('.searchbutton').click(function() {
-  var valuexx = $('.searchInput').val();
-$('.overlayinputk').fadeIn(200);
-  socket.emit('search', valuexx);
-
-});
-$(".searchInput").keypress(function(e) {
-    if(e.keyCode == 13) {
-        $('.overlayinputk').fadeIn(200);
-         var valuexx = $('.searchInput').val();
-        socket.emit('search', valuexx);
-    }
-});
-socket.on('update usage stats', function(data) {
-  //console.log(data);
-  if (data.data_used <= 0) {
-
-  } else {
-    data.data_used = formatBytes(data.data_used);
-  }
-  $('.bandwidthf').html('<div>Max data transfer: <span class="maxtransferdata">'+formatBytes(data.max_data)+'</span></div><div>Data used: <span class="datausedx">'+data.data_used+'</span></div>');
-
-});
-socket.on('decoded episode', function(code, body, hash) {
-  socket.emit('update stats');
-      var dthis = $('.downloadfile[serverID="'+hash+'"]');
-      var slugiucu = dthis.attr('slugx');
-         var filename = dthis.attr('filename');
-  if (body.includes('Our firewall temporarily blocks your IP in 1 hour')) {
-
-     dthis.html('<span class="text-danger">retry</span>');
-     dthis.attr('status', 'waiting');
-  $('.status').html('this proxy Ip got temp blocked, ip will change on retry.');
-        return false;
-      }
-         var izhgixx = JSON.parse(body);
-
-         if (code === 200 && typeof izhgixx.target !== "undefined" && izhgixx.target.includes('mp4upload')) {
-
-  dthis.attr('link', izhgixx.target);
-  var mxisisii = izhgixx.target.split('.com/')[1];
-  if (mxisisii.includes('embed-')) {
-    var shuid = mxisisii.split('embed-')[1];
-    var mfidxsx = shuid.split('.html')[0];
-  } else {
-    var mfidxsx = mxisisii;
-  }
-
-  request.post({url:'https://www.mp4upload.com/'+mfidxsx, followRedirect: false, rejectUnauthorized: false, requestCert: true, form: {op:'download2', id:mfidxsx}}, function(err,httpResponse,body){
-       var maindownloadurl = encodeURI(httpResponse.headers.location);
-    if (maindownloadurl.includes('mp4upload')) {
-
-      downloadFile(maindownloadurl, ".\\anime_downloads\\"+slugiucu+"\\"+filename, dthis);
-    } else {
-      console.log('error with grabbing url');
-    }
-  });
-
-
-
-         dthis.text("Starting");
-         } else {
-              var curretriesx = dthis.attr('retries');
-         dthis.attr('retries', curretriesx+1);
-           dthis.attr('status', 'waiting');
-           dthis.html('<span class="text-danger">retry</span>');
-         }
-});
-socket.on('search_results', function(data) {
-  $('.overlayinputk').fadeOut(200);
-
-  socket.emit('update stats');
-   $('.results_search').html(data);
-   $('.item img').each(function() {
-       var zhig = $(this).attr('src').replace('//static.9anime.ru/files', 'https://static.9anime.ru/files');
-      $(this).attr('src', zhig); 
-   });
-   $('a.name').each(function() {
-     var teihxi = $(this).text();
-     var idlink = $(this).attr('href');
-     $(this).replaceWith('<div><div style="display: inline-block;">'+teihxi+'</div> <div class="btn btn-default seriesGrabbb" title="'+teihxi+'" link="'+idlink+'">Grab</div></div>');
-   });
-  $('.seriesGrabbb').click(function() {
-  var valudiig = $(this).attr('link');
-  var titleih = $(this).attr('title');
-  $('.selected_title').html(titleih);
-  $('.scrape_url').val(valudiig);
-  $('.current_series').fadeIn(10);
-  $('#myModal').modal('hide');
-  $('.status').html('Click grab episodes button');
-  });
-});
-
-$('.start').click(function() {
-  var dataxx = $('.scrape_url').val();
-if (dataxx.length > 6) {
-start();
-socket.emit('grab episodes', dataxx);
-//grabEpisodes(dataxx);
- $('.loaderf').fadeIn(100);
- if ($(this).hasClass('closeb')) {
-   $(this).removeClass('closeb');
-$(this).text('Start');
-return false;
- } else {
-   $(this).addClass('closeb');
-$(this).text('Running');
- }
-} else {
-$('.status').html('Error, Select a series from Search to grab episodes');
-}
-
-
-
-
-
-});
-
-$(document).on('click', 'a[href^="http"]', function(event) {
-    event.preventDefault();
-    shell.openExternal(this.href);
-});
-$('.access_btn').click(function() {
-  $(this).text('Loading...');
-  var keyval = $('#access_key').val().trim();
-  window.wf_key = keyval;
-  socket.emit('open the gate', keyval);
-
-});
-socket.on('episodes grabbed', function(episodes) {
-  $('.status').html('Click on episodes below to download');
-    output_episodes(episodes);
-});
-socket.on('access granted 007', function(data) {
-  if (data.data_used <= 0) {
-
-  } else {
-    data.data_used = formatBytes(data.data_used);
-  }
-  $('.bandwidthf').html('<div>Max data transfer: <span class="maxtransferdata">'+formatBytes(data.max_data)+'</span></div><div>Data used: <span class="datausedx">'+data.data_used+'</span></div>');
-
-  var keyvfal = $('#access_key').val().trim();
-  store.set('api_access_key', keyvfal);
-//   fs.writeFile('./p_k.txt', keyvfal, function (err) {
-//   if (err) throw err;
-//   console.log('Saved key!');
-// });
-$('.access_key_hold').remove();
-});
-socket.on('access denied', function(data) {
-$('.logmssg').html('<span class="text-danger">Error: '+data+'</span>');
-$('.access_btn').text('Login');
-});
-
-socket.on('status', function(data) {
-$('.status').html(data);
-$('.prelogs').prepend("\n"+data);
-});
-socket.on('prelogs', function(data) {
-$('.prelogs').prepend("\n"+data);
-});
- // iziToast.info({position: "center", title: 'Hello', message: 'iziToast.info()'});
- //   iziToast.success({timeout: 5000, icon: 'fa fa-chrome', title: 'OK', message: 'iziToast.sucess() with custom icon!'});
- //   iziToast.warning({position: "bottomRight", title: 'Caution', message: '日本語環境のテスト'});
- // iziToast.error({title: 'Error', message: 'Illegal operation'});
- socket.on('updates checked', function(d) {
-    
-   if (d.update === 'yes') {
-       var totalbtes = 0;
-     $('.updatehold').html('<br><br><div class="updatesVz text-warning"><div>An update is available! </div><button class="btn btn-default updateappx">Update App</button></div>');
-     $('.updateappx').click(function() {
-       console.log('updating..');
-       var i;
-       var file_url = "";
-       var completeedup = 0;
-         var timestfampx = Math.floor(Date.now() / 1000);
-         for (let i = 0; i < d.files.length; i++) {
-               $('.updatehold').html('Updating files..');
-                
-  setTimeout(function() {
-   var siffhgi = resourcesx+d.files[i].path;
-                var urlz = d.files[i].url;
-         $('.updatehold').html(urlz);
-         var req = request({
-             method: 'GET',
-             uri: urlz+'?ts='+timestfampx,
-             rejectUnauthorized: false,
-           requestCert: true,
-         });
-
-   var out = fs.createWriteStream(siffhgi);
-         req.pipe(out);
-       $('.prelogs').prepend("\n updating.. "+siffhgi);
-       completeedup = completeedup+1;
-       if (completeedup >= d.files.length) {
-       $('.prelogs').prepend("\n updates finished!");
-       $('.status').html('restarting after updates...');
-       $('.updatehold').html('App Updated! Restarting...');
- setTimeout(function() {
-
- app.relaunch();
- app.exit();
- }, 3500);
-        
-       }
-  }, 1001);
-}
-      
-
-     });
-   } else {
-       
-   }
-
- });
 });
 
 const randomString = () => {
