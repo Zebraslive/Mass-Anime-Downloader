@@ -11,6 +11,8 @@ Instantly search and download thousands of series, movies, Dubs & Subs. 1080p
 
 Works on any Windows OS (including VPS)
 
+Download multiple episodes and series at once 
+
 Use rotating unlimited high quality proxies and random country with each request.
 
 Use random useragent with each request.
