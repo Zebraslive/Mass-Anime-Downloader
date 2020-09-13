@@ -7,8 +7,8 @@ var os = require('os');
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 850,
-    height: 650,
+    width: 1334,
+    height: 660,
     setOpacity: 0.8,
     transparent: true, frame: false,
     vibrancy: 'ultra-dark',
