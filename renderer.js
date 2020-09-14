@@ -26,14 +26,8 @@ require('ssl-root-cas').inject();
 
 });
  $('#access_key').val(store.get('api_access_key'));
-  // if (fs.existsSync('./p_k.txt')) {
-  //   var dataihg = fs.readFileSync('./p_k.txt');
-  // $('#access_key').val(dataihg);
-  // }
+ $('#proxydx').val(store.get('proxies_list'));
 
-
-
-                // Minimize task
                 document.getElementById("min-btn").addEventListener("click", (e) => {
 
                  var window = BrowserWindow.getFocusedWindow();
