@@ -137,7 +137,7 @@ width: 100%;
   <span>Proxy retry: <input id="toggle-event1" type="checkbox" data-toggle="toggle"></span>
 
   <div style="display:inline-block;">
-  <textarea class="form-control ctextareaP" id="proxydx" placeholder="http://ip:port"></textarea>
+  <textarea class="form-control ctextareaP" id="proxydx" placeholder="http://ip:port"></textarea><button class="btn-sm btn btn-default sfaveprox">Save</button>
   </div>
   <div class="csproixtx"><span class="text-warning">One proxy per line</span> <span class="text-mute text-sm"><small>Only one auto proxy retry per episode. all retries after are direct. Only use if proxy is stable and fast.<br> (this will download via proxy if too many downloads are active at once and mp4upload limits your ip)</small> <br>auth proxy format: http://username:password@ip:port</span></div>
 </div>
@@ -212,7 +212,7 @@ const store = new Store();
   require('ssl-root-cas').inject();
   const loopsy = [];
 var startDate;
-var currentVersion = '6.2';
+var currentVersion = '6.3';
 var vbump = false;
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
@@ -747,6 +747,11 @@ $('.updatehold').eq(0).html('version: '+d.version);
 $('.clearlogsz').click(function() {
   $('.prelogs').html('');
 });
+$('.sfaveprox').click(function() {
+  var svirof = $('#proxydx').val();
+   store.set('proxies_list', svirof);
+});
+
 });
 
 const randomString = () => {
