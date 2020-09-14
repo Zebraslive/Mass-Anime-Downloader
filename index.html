@@ -30,7 +30,12 @@ width: 100%;
 } .panel-default>.panel-heading {    border: none !important;
     color: #d2d2d2;
     background-color: #2f3344d9;
-    border-color: #464646;} .panel-body {    border-top-color: #565656 !important;} .panel {    background: rgba(74, 78, 97, 0.72);} .csproixtx {display:none;}</style>
+    border-color: #464646;} .panel-body {    border-top-color: #565656 !important;} .panel {    background: rgba(74, 78, 97, 0.72);} .csproixtx {display:none;} #proxydx {    background: rgba(47, 51, 68, 0.85);
+    border: 1px solid rgb(31, 37, 61);
+    border-radius: 5px;
+    margin: 0px;
+    overflow: hidden;
+    resize: vertical;}</style>
   </head>
   <body>
 
@@ -118,6 +123,7 @@ width: 100%;
     </div>
     <div id="menu1" class="tab-pane fade">
      Logs<br>
+     <div class=""><button class="btn btn-default clearlogsz">Clear Logs</button></div>
      <pre class="prelogs"></pre>
     </div>
     <div id="menu2" class="tab-pane fade">
@@ -128,10 +134,12 @@ width: 100%;
 
 <div style="margin-bottom: 5px;"><span>Auto Download <input id="toggle-event2" type="checkbox" data-toggle="toggle"></span></div>
 <div class="form-group">
-  <label for="usr">Proxy retry:</label>
-  <input id="toggle-event1" type="checkbox" data-toggle="toggle">
-  <div style="display:inline-block;"><input type="text" placeholder="http://ip:port" class="form-control input-sm" id="proxydx"></div>
-  <div class="csproixtx"><span class="text-mute text-sm"><small>Only one proxy retry per episode. all retries after are direct. Only use if proxy is reliable and fast.</small></span></div>
+  <span>Proxy retry: <input id="toggle-event1" type="checkbox" data-toggle="toggle"></span>
+
+  <div style="display:inline-block;">
+  <textarea class="form-control ctextareaP" id="proxydx" placeholder="http://ip:port"></textarea>
+  </div>
+  <div class="csproixtx"><span class="text-warning">One proxy per line</span> <span class="text-mute text-sm"><small>Only one auto proxy retry per episode. all retries after are direct. Only use if proxy is stable and fast.<br> (this will download via proxy if too many downloads are active at once and mp4upload limits your ip)</small> <br>auth proxy format: http://username:password@ip:port</span></div>
 </div>
       <div class="statsBoxcx">
         Access key data proxy usage
@@ -204,7 +212,7 @@ const store = new Store();
   require('ssl-root-cas').inject();
   const loopsy = [];
 var startDate;
-var currentVersion = '5.8';
+var currentVersion = '6.2';
 var vbump = false;
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
@@ -216,6 +224,14 @@ function formatBytes(bytes, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }
 function string_to_slug (str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trimf
@@ -282,13 +298,19 @@ function downloadFile(file_url , targetPath, progressElement, proxy_retry = fals
     var received_bytes = 0;
     var total_bytes = 0;
 if (proxy_retry !== false) {
- $('.prelogs').prepend("\n"+'Starting proxy retry.. '+file_url+' target = '+targetPath);
- var ishgi = $('#proxydx').val().split(':');
+
+
+var proxies_list = $('#proxydx').val().replace(/(^[ \t]*\n)/gm, "").split('\n');
+for(var i = 0;i < proxies_list.length;i++){
+    proxies_list[i] = proxies_list[i].trim();
+}
+const random_proxyx = proxies_list[Math.floor(Math.random() * proxies_list.length)];
+ $('.prelogs').prepend("\n"+'Starting proxy retry using '+random_proxyx);
     var req = request({
         method: 'GET',
         uri: file_url,
         timeout:66000,
-         proxy: $('#proxydx').val(),
+         proxy: random_proxyx,
         rejectUnauthorized: false,
       requestCert: false,
       headers: {
@@ -343,7 +365,7 @@ var fileSizeInBytes = stats["size"]
          $('.prelogs').prepend("\n Attempting proxy retry...");
          var ishgigz = parseInt(progressElement.attr('proxy-retries'))+1;
          progressElement.attr('proxy-retries', ishgigz);
-          progressElement.html('<span class="text-warning">proxy-try..</span>');
+          
          downloadForce(progressElement, true); //rerun download with proxy enabled.
 
 
@@ -410,7 +432,13 @@ function downloadForce(dthis, proxy_retry = false) {
     var timestampx = Math.floor(Date.now() / 1000);
 
       if (fileurl.includes('mp4upload')) { //already decoded.
-         dthis.text("Starting");
+        if (proxy_retry !== false) {
+          dthis.html('<span class="text-warning">Trying proxy</span>');
+        } else {
+           dthis.text("Starting");
+        }
+        
+        
          var mxisisii = fileurl.split('.com/')[1];
          if (mxisisii.includes('embed-')) {
            var shuid = mxisisii.split('embed-')[1];
@@ -496,14 +524,19 @@ socket.on('decoded episode', function(code, body, hash) {
          var filename = dthis.attr('filename');
   if (body.includes('Our firewall temporarily blocks your IP in 1 hour')) {
 
-     dthis.html('<span class="text-danger">retry</span>');
-     dthis.attr('status', 'waiting');
-  $('.status').html('this proxy Ip got temp blocked, ip will change on retry.');
+     dthis.html('<span class="text-warning"><small>re-trying decode</small></span>');
+  $('.prelogs').prepend('\nproxy Ip got temp blocked while decoding, re-trying now...');
+   socket.emit('decode episode', hash); //try decoding again with new ip.
         return false;
       }
-         var izhgixx = JSON.parse(body);
+      if (isJson(body)) {
+          var izhgixx = JSON.parse(body);
+      } else {
+          var izhgixx = 'fail';
+      }
+         
 
-         if (code === 200 && typeof izhgixx.target !== "undefined" && izhgixx.target.includes('mp4upload')) {
+         if (izhgixx !== 'fail' && code === 200 && typeof izhgixx.target !== "undefined" && izhgixx.target.includes('mp4upload')) {
 
   dthis.attr('link', izhgixx.target);
   var mxisisii = izhgixx.target.split('.com/')[1];
@@ -710,6 +743,9 @@ $('.updatehold').eq(0).html('version: '+d.version);
     $('.panel-heading a').removeClass('activeheader');
   }
   $(this).addClass('activeheader');
+});
+$('.clearlogsz').click(function() {
+  $('.prelogs').html('');
 });
 });
 
