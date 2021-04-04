@@ -29,7 +29,8 @@ instant updates, see when new version is available within app. update all source
 
 Regularly updated, new features coming soon!
 
-Older versions 
+Older versions below
+
 ![alt text](https://i.imgur.com/Xe4BeoE.gif)
 ![alt text](https://i.imgur.com/XQc4uCH.gif)
 
