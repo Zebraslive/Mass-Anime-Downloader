@@ -3,7 +3,7 @@ No longer working! I've started on another version that grabs links from a diffe
 
 Windows Electron App, Download thousands of dubbed &amp; subbed anime videos.
 
-https://youtu.be/5TOMsV9puHQ (preview)
+https://youtu.be/5TOMsV9puHQ (preview newest version)
 
 Download compiled version at: https://massanimedownloader.imfast.io/M.A.D.zip (link no longer working, will replace later on)
 
@@ -29,6 +29,7 @@ instant updates, see when new version is available within app. update all source
 
 Regularly updated, new features coming soon!
 
+Older versions 
 ![alt text](https://i.imgur.com/Xe4BeoE.gif)
 ![alt text](https://i.imgur.com/XQc4uCH.gif)
 
