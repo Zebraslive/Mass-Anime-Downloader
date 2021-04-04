@@ -1,11 +1,15 @@
 # Mass-Anime-Downloader
+No longer working! I've started on another version that grabs links from a different site and I might link it here in the future. If you want to contact me for any job requests my discord is **BDA#6533**
+
 Windows Electron App, Download thousands of dubbed &amp; subbed anime videos.
 
-Download compiled version at: https://massanimedownloader.imfast.io/M.A.D.zip
+https://youtu.be/5TOMsV9puHQ (preview)
+
+Download compiled version at: https://massanimedownloader.imfast.io/M.A.D.zip (link no longer working, will replace later on)
 
 https://www.virustotal.com/gui/file/a7338dfe0b31483d79a69e17431f5b03782f2ea61b8d13d510fb43ee33f218ba/detection
 
-The proxy is not used to download files, only very small json proxy requests are made to grab and decode the mp4upload links.
+The proxy is not used to download files, only very small json proxy requests are made to grab and decode the video links.
 
 Instantly search and download thousands of series, movies, Dubs & Subs. 1080p
 
